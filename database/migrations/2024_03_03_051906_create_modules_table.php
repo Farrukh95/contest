@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('modules', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->foreignId('module_type_id')->constrained('module_types');
+            $table->integer('min_students')->unsigned(); // Минимальное количество студентов для открытия модуля
+            $table->integer('max_students')->unsigned(); // Максимальное количество студентов на модуле
+            $table->foreignId('school_id')->constrained('schools');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('modules');
+    }
+};
